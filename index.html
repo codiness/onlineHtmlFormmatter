@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online HTML formatter</title>
+  <meta name="description"
+        content="The embellishment of text to increase its aesthetic attractiveness is what is meant by the term 'HTML Formatting.'">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/codemirror.min.css">
+  <script src="scripts/codemirror/codemirror.min.js"></script>
+  <script src="scripts/codemirror/xml.js"></script>
+  <script src="scripts/codemirror/active-line.js"></script>
+</head>
+<body>
+<svg class="hidden">
+  <symbol id="play" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path fill-rule="evenodd"
+          d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z"
+          clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="download" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path fill-rule="evenodd"
+          d="M12 2.25a.75.75 0 01.75.75v11.69l3.22-3.22a.75.75 0 111.06 1.06l-4.5 4.5a.75.75 0 01-1.06 0l-4.5-4.5a.75.75 0 111.06-1.06l3.22 3.22V3a.75.75 0 01.75-.75zm-9 13.5a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+          clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="upload" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path fill-rule="evenodd"
+          d="M11.47 2.47a.75.75 0 011.06 0l4.5 4.5a.75.75 0 01-1.06 1.06l-3.22-3.22V16.5a.75.75 0 01-1.5 0V4.81L8.03 8.03a.75.75 0 01-1.06-1.06l4.5-4.5zM3 15.75a.75.75 0 01.75.75v2.25a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5V16.5a.75.75 0 011.5 0v2.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V16.5a.75.75 0 01.75-.75z"
+          clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="link" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+    <path fill-rule="evenodd"
+          d="M19.902 4.098a3.75 3.75 0 00-5.304 0l-4.5 4.5a3.75 3.75 0 001.035 6.037.75.75 0 01-.646 1.353 5.25 5.25 0 01-1.449-8.45l4.5-4.5a5.25 5.25 0 117.424 7.424l-1.757 1.757a.75.75 0 11-1.06-1.06l1.757-1.757a3.75 3.75 0 000-5.304zm-7.389 4.267a.75.75 0 011-.353 5.25 5.25 0 011.449 8.45l-4.5 4.5a5.25 5.25 0 11-7.424-7.424l1.757-1.757a.75.75 0 111.06 1.06l-1.757 1.757a3.75 3.75 0 105.304 5.304l4.5-4.5a3.75 3.75 0 00-1.035-6.037.75.75 0 01-.354-1z"
+          clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="copy" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round"
+          d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184"/>
+  </symbol>
+</svg>
+<header class="shadow">
+  <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900">
+    <div class="container flex flex-wrap justify-between items-center">
+      <a href="#" class="flex items-center">
+        <img src="images/logomain.png" width="233" height="30"
+             alt="beautifier js | free online js beautifier &  js minifier &  js obfuscator">
+      </a>
+      <button data-collapse-toggle="navbar-default" type="button"
+              class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+              aria-controls="navbar-default" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
+             xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+                clip-rule="evenodd"></path>
+        </svg>
+      </button>
+      <div class="hidden w-full md:block md:w-auto" id="navbar-default">
+        <ul class="flex flex-col p-4 mt-4 bg-gray-50 rounded-lg border border-gray-100 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+          <li>
+            <a href="#"
+               class="block py-2 pr-4 pl-3 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-amber-500 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<main class="py-8">
+  <div class="container">
+    <div class="text-center mb-14">
+      <h1 class="text-3xl sm:text-4xl font-bold">Online HTML formatter</h1>
+      <p class="text-gray-900 mt-3">HTML code formatter has a wide variety of tags that can be applied to text to make it more aesthetically pleasing to readers.</p>
+    </div>
+    <div class="flex flex-wrap sm:flex-nowrap gap-5 lg:gap-8">
+      <div class="w-full sm:w-1/2">
+        <div class="flex gap-3">
+          <button class="btn btn-white w-24" onclick="document.getElementById('loadfile').click();">
+            <svg class="w-5 h-5">
+              <use xlink:href="#upload"></use>
+            </svg>
+            File
+          </button>
+          <input type="file" id="loadfile" class="hidden" accept=".html" onchange="onLoadFromFileClicked()"/>
+          <!-- Main modal -->
+          <div id="urlModal" tabindex="-1" aria-hidden="true"
+               class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full justify-center items-center">
+            <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
+              <!-- Modal content -->
+              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex justify-between items-start p-4 rounded-t border-b dark:border-gray-600">
+                  <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                    Enter your URL
+                  </h3>
+                  <button type="button"
+                          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                          data-modal-toggle="urlModal">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd"
+                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                  </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-6 space-y-6">
+                  <div class="">
+                    <label for="url-input"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your
+                      url</label>
+                    <input type="text" id="url-input"
+                           class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                           placeholder="..." required>
+                  </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="flex items-center p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                  <button data-modal-toggle="urlModal" onclick="onLoadFromUrlClicked()" type="button"
+                          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Submit
+                  </button>
+                  <button data-modal-toggle="urlModal" type="button"
+                          class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button class="btn btn-white w-24" onclick="onLoadFromUrlClicked()" data-modal-toggle="urlModal">
+            <svg class="w-5 h-5">
+              <use xlink:href="#link"></use>
+            </svg>
+            Url
+          </button>
+        </div>
+        <div class="border border-gray-300 mt-4">
+          <textarea id="input"></textarea>
+        </div>
+      </div>
+      <div class="w-full sm:w-1/2">
+        <div class="flex gap-3">
+          <button class="btn btn-white w-24" onclick="onCopyClicked()">
+            <svg class="w-5 h-5">
+              <use xlink:href="#copy"></use>
+            </svg>
+            Copy
+          </button>
+          <button class="btn btn-white w-24" onclick="onSaveClicked()">
+            <svg class="w-5 h-5">
+              <use xlink:href="#download"></use>
+            </svg>
+            Save
+          </button>
+        </div>
+        <div class="border border-gray-300 mt-4">
+          <textarea id="output"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4">
+      <div>
+        <div class="flex justify-center gap-3">
+          <button class="btn btn-blue btn-md w-44" onclick="onBeautifyClicked()">Beautify</button>
+          <button class="btn btn-cyan btn-md w-44" onclick="onMinifyClicked()">Minify</button>
+        </div>
+      </div>
+      <div class="flex flex-row lg:flex-col xl:flex-row justify-center lg:justify-start flex-wrap gap-6 mt-5 lg:-mt-12">
+        <div>
+          <p class="text-lg font-bold text-gray-700">Beautify Settings:</p>
+          <div class="flex gap-5">
+            <div class="w-44 mt-4">
+              <label for="jsindent" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">JS Indent
+                size</label>
+              <input id="jsindent" type="number"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                     placeholder="your indent size ..." value="2">
+            </div>
+            <div class="w-44 mt-4">
+              <label for="cssindent" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Css Indent
+                size</label>
+              <input id="cssindent" type="number"
+                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                     placeholder="your indent size ..." value="2">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-24">
+      <div class="text-sm sm:text-base leading-6 sm:leading-8">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-4 capitalize">Online HTML formatter</h2>
+        <p>
+          The embellishment of text to increase its aesthetic attractiveness is what is meant by the term "HTML Formatting."
+        </p>
+        <p>
+          HTML code formatter has a wide variety of tags that can be applied to text to make it more aesthetically pleasing to readers.
+        </p>
+        <p>
+          As with almost every other text editor, this also provides various formatting choices.
+          So, HTML Formatter Online is a tool that makes editing, viewing, and analyzing HTML data easier.
+        </p>
+        <h3 class="text-lg font-bold mb-2 capitalize mt-6">This tool has some branches that are all so useful:</h3>
+        <span class="block">&bull; HTML viewer tool</span>
+        <span class="block">&bull; HTML beautifier tool</span>
+        <span class="block">&bull; HTML minifier tool</span>
+        <p class="mt-5 font-bold">Now lets to see what are these tools and application:</p>
+        <h3 class="text-lg font-bold mb-2 capitalize mt-6">HTML viewer tool</h3>
+        <p>
+          Software that can display web pages written in HTML is an HTML viewer online.
+          An HTML viewer tool is often a software that operates on its own, but it also can be embedded into another application.
+          The viewer includes an engine that transforms the HTML code into a page visitors can see by scrolling through and clicking around on.
+        </p>
+        <h3 class="text-lg font-bold mb-2 capitalize mt-2">Steps</h3>
+        <p>1. Copy and paste HTML code from HTML Viewer into Input.</p>
+        <p>2. Upload HTML files using the Upload file button.</p>
+        <p>3. Once HTML data is in Editor through Paste, File, or URL, click Run/View.</p>
+
+      </div>
+      <div class="content hidden text-sm sm:text-base leading-6 sm:leading-8">
+        <h3 class="text-lg font-bold mb-2 capitalize mt-6">HTML beautifier tool</h3>
+        <p>
+          The HTML beautifier online free tool will transform your minified HTML code into a legible and intelligible format for humans.
+        </p>
+        <p>
+          Using the HTML beautifier tool, you can use the code cleaned up by copying and pasting it into your application development.
+        </p>
+
+        <h3 class="text-lg font-bold mb-2 capitalize mt-2">Steps</h3>
+        <p>1. Input HTML in the editor.</p>
+        <p>2. Select space or tab indentation.</p>
+        <p>3. Warp Lines characters may wrap after 40/70/80 or more characters.</p>
+        <p>4. Click Format HTML to format the HTML code and display it.</p>
+
+        <h3 class="text-lg font-bold mb-2 capitalize mt-6">HTML minifier tool</h3>
+        <p>
+          The practice of reducing the amount of code and markup present in your website's script files and web pages, known as minification, is done by an online HTML minifier.
+        </p>
+        <p>
+          It is one of the primary approaches to cut down on load times and the amount of bandwidth consumed on websites by online HTML minifier.
+        </p>
+        <p>
+          The minification and HTML minifier results in significant gains in both the speed and accessibility of a website, which directly contribute to an improvement in the quality of the experience provided to users.
+        </p>
+
+        <h3 class="text-lg font-bold mb-2 capitalize mt-2">Steps</h3>
+        <p>1. Minimize HTML using HTMLMinifier.</p>
+        <p>2. CSSNano and so are good CSS minifiers.</p>
+        <p>3. UglifyJS minifies JavaScript. Also effective is the Closure Compiler. A build process can utilize these tools to minify and rename development files and save them to a production location.</p>
+
+        <p class="mt-6">As was just noted, the online HTML formatter is a free tool that every website owner ought to be acquainted with, both in terms of its capabilities and the way it operates.</p>
+        <p>We have simplified these processes and stages for you on the HTML-formatted website. You can do all online HTML formatter steps by using an HTML beautifier, HTML minified and HTML viewer while using our free tools just by copying and pasting the data in the appropriate place.</p>
+      </div>
+      <span class="show-more-btn btn btn-white btn-md w-44 mx-auto cursor-pointer select-none mt-6">Show More Info</span>
+    </div>
+  </div>
+  <a href="#" id="dl" target="_blank" class="hidden"></a>
+</main>
+<footer class="py-6 bg-gray-200">
+  <div class="container flex items-center justify-between text-gray-500">
+    <span>Copyright © 2018-2019 </span>
+    <span>HTML formatter | All rights reserved</span>
+  </div>
+</footer>
+<script>
+  const showMoreBtn = document.querySelector(".show-more-btn");
+  showMoreBtn.addEventListener("click", function () {
+    document.querySelector(".content").classList.remove("hidden");
+    this.classList.add("hidden")
+  })
+</script>
+<script src="scripts/flowbite.js" defer></script>
+<script src="scripts/html-beautify/beautify-html.js" defer></script>
+<script src="scripts/html-beautify/minify.js" defer></script>
+<script src="scripts/html-beautify/script.js" defer></script>
+</body>
+</html>
